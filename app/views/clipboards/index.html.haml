@@ -1,0 +1,19 @@
+%html
+  %head
+    %script{ src: "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js" }
+    %link{ rel: "stylesheet", href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" }
+  %body
+    %center
+      %h1 Clipboard Test
+      .mb-3
+        %textarea#exampleFormControlTextarea1.form-control{ rows: "3" }
+        %button.clipboard-btn.btn.btn-primary{ "data-clipboard-action" => "copy", "data-clipboard-target" => "#exampleFormControlTextarea1" }
+          %i.fas.fa-clipboard
+          
+
+    :javascript
+      document.addEventListener('DOMContentLoaded', function() {
+        new ClipboardJS('.clipboard-btn');
+      });
+      
+      

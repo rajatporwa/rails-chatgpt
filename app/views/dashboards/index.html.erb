@@ -1,0 +1,190 @@
+<%# <h1><center>Welcome to OpenAI</center></h1>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenAI Search</title>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<center>
+  <h1>OpenAI Search</h1>
+
+  <div id="result"></div>
+
+  <script>
+    $(document).ready(function() {
+     
+      $('#searchButton').on('click', function() {
+       
+        var userQuery = $('#queryInput').val();
+
+        $.ajax({
+          url: '/search',
+          method: 'POST',
+          data: { query: userQuery },
+          success: function(response) {
+            $('#result').text('Answer: ' + response.answer);
+          },
+          error: function(error) {
+            console.error('Error:', error);
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Input field and button for user query -->
+  <label for="queryInput">Enter your query:</label>
+  <input type="text" id="queryInput">
+  <button id="searchButton">Search</button>
+</center>
+</body>
+</html>
+
+ %>
+
+ <!-- app/views/images/search.html.erb -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenAI Image Search</title>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+  <div style="text-align: center; margin-top: 20px;">
+    <h1>Welcome to OpenAI Image Search</h1>
+
+    <h1>OpenAI Image Search</h1>
+
+    <div id="result">
+      <img id="imageResult" src="" alt="Image Result">
+    </div>
+
+    <script>
+      $(document).ready(function() {
+        $('#searchButton').on('click', function() {
+          var imageUrl = $('#imageUrlInput').val();
+
+          $.ajax({
+            url: '/search',
+            method: 'POST',
+            data: { image_url: imageUrl },
+            success: function(response) {
+              $('#imageResult').attr('src', response.caption);
+            },
+            error: function(error) {
+              console.error('Error:', error);
+            }
+          });
+        });
+      });
+    </script>
+    <label for="imageUrlInput">Enter image URL:</label>
+    <input type="text" id="imageUrlInput">
+    <button id="searchButton">Search</button>
+  </div>
+</body>
+</html>
+
+<%# <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenAI Image Search</title>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+  <div style="text-align: center; margin-top: 20px;">
+    <h1>Welcome to OpenAI Image Search</h1>
+
+    <div id="result">
+      <p id="captionResult"></p>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+        $('#searchButton').on('click', function() {
+          var imageUrl = $('#imageUrlInput').val();
+
+          $.ajax({
+            url: '/search',
+            method: 'POST',
+            data: { image_url: imageUrl },
+            success: function(response) {
+              $('#captionResult').text('Caption: ' + response.caption);
+            },
+            error: function(error) {
+              console.error('Error:', error);
+            }
+          });
+        });
+      });
+    </script>
+
+    <label for="imageUrlInput">Enter image URL:</label>
+    <input type="text" id="imageUrlInput">
+    <button id="searchButton">Search</button>
+  </div>
+</body>
+</html> %>
+
+<%# <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenAI Search</title>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+  <div style="text-align: center; margin-top: 20px;">
+    <h1>Welcome to OpenAI Search</h1>
+
+    <div id="result"></div>
+
+    <script>
+      $(document).ready(function() {
+        $('#searchButton').on('click', function() {
+          var inputText = $('#searchInput').val();
+          var taskType = $('#taskType').val();
+
+          $.ajax({
+            url: '/search',
+            method: 'POST',
+            data: {
+              input_text: taskType === 'image_caption' ? '' : inputText,
+              image_url: taskType === 'image_caption' ? inputText : '',
+              task_type: taskType
+            },
+            success: function(response) {
+              var resultText = response.result || 'No result received from the server';
+              $('#result').text('Result: ' + response.result);
+            },
+            error: function(error) {
+              console.error('Error:', error);
+            }
+          });
+        });
+      });
+    </script>
+
+    <label for="searchInput">Enter search input:</label>
+    <input type="text" id="searchInput">
+    
+    <label for="taskType">Select task type:</label>
+    <select id="taskType">
+      <option value="chat">Chat</option>
+      <option value="image_caption">Image Caption</option>
+    </select>
+
+    <button id="searchButton">Search</button>
+  </div>
+</body>
+</html>
+ %>

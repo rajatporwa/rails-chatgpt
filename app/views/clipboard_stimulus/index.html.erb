@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clipboard Test</title>
+  <!-- Include Stimulus library -->
+  <script src="https://cdn.jsdelivr.net/npm/@hotwired/stimulus@3.0.0/dist/stimulus.umd.js" defer></script>
+</head>
+<body>
+  <div>
+    <p>PIN: <input type="text" value="1234" readonly></p>
+    <!-- Add data-controller and data-action attributes -->
+    <button data-controller="clipboard" data-action="click->clipboard#copy" data-clipboard-text="Text to copy">Copy</button>
+  </div>
+
+  <script>
+    // Define your Stimulus controller
+    class ClipboardController extends Stimulus.Controller {
+      copy(event) {
+        event.preventDefault();
+        const textToCopy = event.target.dataset.clipboardText;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          console.log('Text copied to clipboard');
+        }).catch((error) => {
+          console.error('Failed to copy text: ', error);
+        });
+      }
+    }
+
+    // Initialize Stimulus application
+    const application = Stimulus.Application.start();
+    application.register("clipboard", ClipboardController);
+  </script>
+</body>
+</html>

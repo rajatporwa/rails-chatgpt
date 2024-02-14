@@ -1,0 +1,50 @@
+<h1><center>Welcome to OpenAI</center></h1>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenAI Search</title>
+  <!-- Include jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<center>
+  <h1>OpenAI Search</h1>
+
+  <div id="result"></div>
+
+  <script>
+    $(document).ready(function() {
+      // Event listener for a button click (you can adapt this to your needs)
+      $('#searchButton').on('click', function() {
+        // Get the user query from an input field
+        var userQuery = $('#queryInput').val();
+
+        // Make an AJAX request to the '/search' endpoint
+        $.ajax({
+          url: '/search',
+          method: 'POST',
+          headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
+
+          data: { query: userQuery },
+          success: function(response) {
+            // Display the answer in the 'result' div
+            $('#result').text('Answer: ' + response.answer);
+            // You can further handle the answer as needed
+          },
+          error: function(error) {
+            console.error('Error:', error);
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Input field and button for user query -->
+  <label for="queryInput">Enter your query:</label>
+  <input type="text" id="queryInput">
+  <button id="searchButton">Search</button>
+</center>
+</body>
+</html>
